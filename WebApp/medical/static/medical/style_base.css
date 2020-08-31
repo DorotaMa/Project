@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body, div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    overflow-y:auto;
+}
+
+#old_woman, #wooden_blocks {
+    max-width:100%;
+    display:block;
+}
+
+
+.container1, .container2 {
+  display: flex;
+  width: 100%;
+}
+
+.box1{
+  width: 50%;
+}
+
+.box2 {
+  width: 50%;
+  text-align: center;
+  padding-top: 3%;
+}
+
+.box3 {
+  text-align: center;
+  width: 50%;
+  padding-top: 3%
+}
+
+.box4 {
+  width: 50%;
+}
+
+
+@font-face {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+font-family: Open Sans; font-size: 2.5vw; font-style: normal; font-variant: normal; font-weight: 400; line-height: 26.4px;
+}
+
+h2 {
+font-family: Open Sans; font-size: 2vw; font-style: normal; font-variant: normal; font-weight: 350; line-height: 1.6;
+}
+
+h3 {
+font-family: Open Sans; font-size: 1.25vw; font-style: normal; font-variant: normal; font-weight: 300; line-height: 15.4px;
+}
+
+p {
+}
+
+blockquote { font-family: Open Sans; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 29.99px; }
+pre { font-family: Open Sans; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.57px; }
+
+/*
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    max-height: 40vh;
+    min-width: 20vw;
+    object-fit:cover;
+    vertical-align: bottom;
+}
+*/
