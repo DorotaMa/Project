@@ -12,11 +12,37 @@ html, body, div {
     overflow-y:auto;
 }
 
-#old_woman, #wooden_blocks {
+header {
+    background-color: white;
+    text-align: left;
+    padding-left: 10%;
+    padding-bottom: 4%;
+}
+
+.title {
+    font-family: Open Sans;
+    font-size: 2.5vw;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    color: #FF5E13;
+    margin-bottom: 0;
+    line-spacing:single;
+}
+
+.subtitle {
+    font-family: Open Sans;
+    font-size: 1.75vw;
+    color: #757575;
+    padding:0;
+    margin:0;
+    line-spacing:single
+}
+
+img {
     max-width:100%;
     display:block;
 }
-
 
 .container1, .container2 {
   display: flex;
@@ -30,13 +56,36 @@ html, body, div {
 .box2 {
   width: 50%;
   text-align: center;
-  padding-top: 3%;
+}
+
+.phone {
+    font-weight: bold;
+    line-height:2;
+    color: #FF5E13;
 }
 
 .box3 {
   text-align: center;
+  padding-top: 3%;
   width: 50%;
-  padding-top: 3%
+}
+
+.desc {
+    text-align: center;
+    font-family: Open Sans;
+    font-size: 1.75vw;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 350;
+}
+
+.treatments {
+    font-family: Open Sans;
+    font-size: 1.75vw;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 350;
+    line-height: 1
 }
 
 .box4 {
@@ -48,6 +97,10 @@ html, body, div {
   font-family: 'Open Sans', sans-serif;
 }
 
+
+
+
+
 h1 {
 font-family: Open Sans; font-size: 2.5vw; font-style: normal; font-variant: normal; font-weight: 400; line-height: 26.4px;
 }
@@ -58,9 +111,6 @@ font-family: Open Sans; font-size: 2vw; font-style: normal; font-variant: normal
 
 h3 {
 font-family: Open Sans; font-size: 1.25vw; font-style: normal; font-variant: normal; font-weight: 300; line-height: 15.4px;
-}
-
-p {
 }
 
 blockquote { font-family: Open Sans; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 29.99px; }

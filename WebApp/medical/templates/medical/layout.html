@@ -6,23 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
 
     <title>lek. Maria Malinowska</title>
-     <!-- Bootstrap CSS  -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <!-- Css stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'medical/style_base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'medical/style_base.css' %}"/>
     <!-- Fonts -->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
 </head>
 
 <body>
-    <header style="background-color: white; text-align: left; padding-top: 2.5%; padding-left: 10%; padding-bottom: 4%;">
-        <h1 style="color: #FF5E13; font-weight: bold; margin-bottom: 1%; line-spacing:single; ">
-            Reumatolog Maria Malinowska
-        </h1>
-        <h3 style="font-size: 1.75vw; color: #757575; marging-top: 0px; margin-bottom: 0px; line-spacing:single">
-            Praktyka Prywatna Specjalisty Reumatologa Lekarza Chorób Wewnętrzynch
-        </h3>
+    <header>
+        <p class="title"> Reumatolog Maria Malinowska </p>
+        <p class="subtitle"> Praktyka Prywatna Specjalisty Reumatologa Lekarza Chorób Wewnętrzynch </p>
     </header>
 
     {% block content %}
