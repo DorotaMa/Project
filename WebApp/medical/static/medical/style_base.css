@@ -17,6 +17,8 @@ header {
     text-align: left;
     padding-left: 10%;
     padding-bottom: 4%;
+    display:flex;
+    width: 70%;
 }
 
 .title {
@@ -96,9 +98,6 @@ img {
 @font-face {
   font-family: 'Open Sans', sans-serif;
 }
-
-
-
 
 
 h1 {
