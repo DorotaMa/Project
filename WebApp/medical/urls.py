@@ -1,11 +1,13 @@
 from django.urls import path
+from django.conf.urls import url
 
 
 from . import views
 
+app_name = 'medical'
+
 urlpatterns = [
     path('', views.medical),
     path('register', views.register, name="register"),
-    path('hello', views.hello, name="hello"),
-    path('hello_login', views.hello_login, name='hello_login'),
+    url(r'^calendar/$', views.CalendarView.as_view(), name='calendar')
 ]
