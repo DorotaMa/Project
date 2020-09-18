@@ -11,4 +11,6 @@ urlpatterns = [
     path('register', views.register, name="register"),
     path('question', views.ask_question, name="question"),
     url(r'^calendar/$', views.CalendarView.as_view(), name='calendar')
+    url(r'^calendar', views.CalendarView.as_view(), name='calendar'),
+    path("update/<int:wizyta_id>", views.update, name="update"),
 ]

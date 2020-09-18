@@ -1,0 +1,16 @@
+{% extends "medical/layout.html" %}
+    {% block content %}
+    <p> Godzina rozpoczęcia: {{ wizyta.start_time }} </p>
+    <p>  Godzina zakończenia: {{ wizyta.end_time }} </p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <p>Cel wizyty</p>
+            <input type="text" name="notes" class="form-control" value="notes" method="POST">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Potwierdź wizytę" method="POST">
+        </div>
+    </form>
+    {% endblock %}
