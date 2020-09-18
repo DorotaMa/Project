@@ -122,3 +122,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='/medical/'
 LOGOUT_REDIRECT_URL='/medical/'
+
+# Sending questions by e-mail
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/email-messages/'
+
+# dodać poprawną konforugarcję serwera mailingowego

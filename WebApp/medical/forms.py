@@ -19,3 +19,12 @@ class RegisterForm(UserCreationForm):
         # jezeli nie ma byc napisow dot. password nalezy to usunąc z settings aplikacji passworD_validation
         # aby to ladniej wygladalo trzeba pobrac crispy
         # custom user model => dodatkowa tablea
+
+
+# do podmiany adresy e-mail
+
+class AskingQuestion(forms.Form):
+    name = forms.CharField(max_length=15)
+    surname = forms.CharField(max_length=25)
+    email = forms.EmailField()
+    message = forms.CharField(required=True, widget=forms.Textarea)

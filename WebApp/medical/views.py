@@ -1,9 +1,14 @@
+from datetime import datetime
 from django.shortcuts import render
-from django.shortcuts import reverse
 from django.http import HttpResponse
-from . import forms
-from django.shortcuts import redirect
-# Create your views here.
+from django.views import generic
+from django.utils.safestring import mark_safe
+
+from .models import *
+from .utils import Calendar
+
+from .forms import AskingQuestion
+from django.core.mail import send_mail
 
 
 def medical(request):
@@ -19,17 +24,6 @@ def register(request):
     else:
         form = forms.RegisterForm()
     return render(request, 'medical/register.html', {"form": form})
-
-
-
-from datetime import datetime
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import generic
-from django.utils.safestring import mark_safe
-
-from .models import *
-from .utils import Calendar
 
 
 class CalendarView(generic.ListView):
@@ -56,4 +50,29 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return datetime.date(year, month, day=1)
     return datetime.today()
+
+
+# Formularz kontaktowy do lekarza
+
+
+def ask_question(request):
+    sent = False
+    if request.method == 'POST':
+        form = AskingQuestion(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            subject = f"Pacjent {cd['name']} {cd['surname']} pragnie zadać pytanie"
+            message = f"Dane pacjenta:\nImię: {cd['name']} Nazwisko: {cd['surname']}\nAdres e-mail: {cd['email']}\n\n" \
+                      f"Pytanie:\n{cd['message']}"
+            send_mail(subject, message, cd['email'], 'admin_lekarz@strona.pl')
+
+            # dodać poprawny ades e-mail
+
+            sent = True
+
+    else:
+        form = AskingQuestion()
+
+    return render(request, 'medical/question.html', {'form': form, 'sent': sent})
+
 
