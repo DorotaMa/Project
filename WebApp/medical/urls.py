@@ -9,5 +9,6 @@ app_name = 'medical'
 urlpatterns = [
     path('', views.medical),
     path('register', views.register, name="register"),
-    url(r'^calendar/$', views.CalendarView.as_view(), name='calendar')
+    url(r'^calendar', views.CalendarView.as_view(), name='calendar'),
+    path("update/<int:wizyta_id>", views.update, name="update"),
 ]

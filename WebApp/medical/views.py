@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import reverse
 from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+
 from . import forms
 from django.shortcuts import redirect
 # Create your views here.
@@ -42,7 +44,7 @@ class CalendarView(generic.ListView):
         # use today's date for the calendar
         d = get_date(self.request.GET.get('day', None))
 
-        # Instantiate our calendar class with today's year and date
+        # Instantiate our calendar class with today's year and month
         cal = Calendar(d.year, d.month)
 
         # Call the formatmonth method, which returns our calendar as a table
@@ -57,3 +59,20 @@ def get_date(req_day):
         return datetime.date(year, month, day=1)
     return datetime.today()
 
+
+# @require_http_methods(["GET", "POST"])
+def update(request, wizyta_id):
+
+    w = Wizyta.objects.get(pk=wizyta_id)
+
+    if request.method == "GET":
+        return render(request, 'medical/update.html', {
+            "wizyta": w,
+        })
+
+    else:
+        # U (Update) z CRUD
+        w.text = request.POST.get("wizyta")
+        w.save()
+
+        return redirect("medical:calendar")
