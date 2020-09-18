@@ -1,6 +1,18 @@
 {% extends "medical/layout.html" %}
     {% block content %}
 
+    <div class="credentials" style="display: flex; background-color:#cecece;">
+        {% if user.is_authenticated %}
+            <h2 style="color:white; text-align: center;"> Witaj {{user}}! </h2>
+            <a href="/logout" style="color:white">Wyloguj</a>
+            <a href="/medical/calendar" style="color:white">Umów Wizytę</a>
+        {% else %}
+            <a href="/login" style="color:white">Zaloguj</a>
+            <a href="register"> Zarejestruj</a>
+        {% endif %}
+    </div>
+
+
 <div class="container1">
     <div class="box1"> <img src="../../static/medical/1800x1200.jpg"/> </div>
     <div class="box2">
@@ -37,8 +49,6 @@
         <img class="thumbnail" src="../../static/medical/c5.jpg" alt=" "/>
         <img class="thumbnail" src="../../static/medical/c6.jpg" alt=" "/>
         <img class="thumbnail" src="../../static/medical/c7.jpg" alt=" "/></div>
-
-
 </div>
 
     {% endblock %}
