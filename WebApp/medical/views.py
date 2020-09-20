@@ -1,10 +1,16 @@
+from datetime import datetime
 from django.shortcuts import render
-from django.shortcuts import reverse
-from django.http import HttpResponse
-from django.views.decorators.http import require_http_methods
-
-from . import forms
+from django.views import generic
+from django.utils.safestring import mark_safe
 from django.shortcuts import redirect
+
+from .forms import AskingQuestion
+from django.core.mail import send_mail
+
+from .models import *
+from .utils import Calendar
+from . import forms
+
 # Create your views here.
 
 
@@ -17,21 +23,26 @@ def register(request):
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect(reverse('medical'))
+        return redirect(reverse('medical:medical'))
     else:
         form = forms.RegisterForm()
     return render(request, 'medical/register.html', {"form": form})
 
 
 
-from datetime import datetime
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import generic
-from django.utils.safestring import mark_safe
-
-from .models import *
-from .utils import Calendar
+def user_details(request):
+    if request.method == "POST":
+        form = forms.UserDetails(request.POST)
+        if form.is_valid():
+            newuser = form.save(commit=False)
+            newuser.user = request.user
+            newuser.save()
+        else:
+            print(form.errors)
+        return redirect(reverse('medical:medical'))
+    else:
+        form = forms.UserDetails()
+        return render(request, 'medical/userdetails.html', {"form":form})
 
 
 class CalendarView(generic.ListView):
@@ -72,7 +83,36 @@ def update(request, wizyta_id):
 
     else:
         # U (Update) z CRUD
-        w.text = request.POST.get("wizyta")
+        w.pacjent = Pacjent.objects.get(user=request.user)
+        w.notes = request.POST.get("notes")
         w.save()
 
+
         return redirect("medical:calendar")
+
+# Formularz kontaktowy do lekarza
+
+
+
+def ask_question(request):
+    sent = False
+    if request.method == 'POST':
+        form = AskingQuestion(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            subject = f"Pacjent {cd['name']} {cd['surname']} pragnie zadać pytanie"
+            message = f"Dane pacjenta:\nImię: {cd['name']} Nazwisko: {cd['surname']}\nAdres e-mail: {cd['email']}\n\n" \
+                      f"Pytanie:\n{cd['message']}"
+            send_mail(subject, message, cd['email'], ['admin_lekarz@strona.pl'])
+
+            # dodać poprawny ades e-mail
+
+            sent = True
+            return redirect('./')
+    else:
+        form = AskingQuestion()
+    return render(request, 'medical/question.html', {'form': form, 'sent': sent})
+
+
+
+
