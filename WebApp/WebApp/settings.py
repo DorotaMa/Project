@@ -27,24 +27,58 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Needed to login by username in Django admin, regardless of `allauth`
+# `allauth` specific authentication methods, such as login by e-mail
+
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+    ]
 
 # Application definition
 
 INSTALLED_APPS = [
     'medical',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 3
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '136663236918-n56v83cu10p7vkp6bfa93ats52irr59d.apps.googleusercontent.com',
+            'secret': 'pSTO9BKLjuTWxry8czwrPgHk',
+            'key': ''
+        }
+    }
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,3 +153,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL='/medical/'
+LOGOUT_REDIRECT_URL='/medical/'
+
+# Sending questions by e-mail/ to umożliwa testowanie wysyłania formularza mailowego
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = './email-messages'
+
+# dodać poprawną konforugarcję serwera mailingowego
+
+# email settings
