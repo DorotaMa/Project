@@ -7,12 +7,28 @@ from django.db import models
 from django.urls import reverse
 
 
+class Pacjent(models.Model):
+    imie = models.CharField(max_length=50)
+    nazwisko = models.CharField(max_length=50)
+    rok_urodzenia = models.IntegerField
+    plec_regex = RegexValidator(regex=r'k|m', message="Jeśli jesteś kobitą wpis k, jeżeli mężczyzną wpisz m.")
+    plec = models.CharField(validators=[plec_regex], max_length=1)
+    tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                               message="Proszę podać numer telefonu w formacie: +999999999.")
+    numer_telefonu = models.CharField(validators=[tel_regex], max_length=17, blank=True)
+    email = models.EmailField
+    data_utworzenia_konta = models.DateTimeField(auto_now=False)
+
+    def __str__(self):
+        return f"Imię i nazwisko pacjęta: {self.imie}+' '+{self.nazwisko}"
+
+
 class Wizyta(models.Model):
     day = models.DateField("Dzień wizyty", help_text="Dzień wizyty")
     start_time = models.TimeField("Godzina rozpoczęcia wizyty", help_text="Godzina wityty")
     end_time = models.TimeField("Godzina zakończenia wizyty", help_text="Godzina zakończenia")
     notes = models.TextField("Notatki", help_text='Miejsce na Twoje notatki', blank=True)
-
+    pacjent = models.ForeignKey(Pacjent, on_delete=models.CASCADE, default=None, blank=True, null=True)
 
     class Meta:
         verbose_name = u'Kalendarz wizyt'
@@ -47,18 +63,12 @@ class Wizyta(models.Model):
     #                         event.start_time) + '-' + str(event.end_time))
 
 
-class Pacjent(models.Model):
-    imie = models.CharField(max_length=50)
-    nazwisko = models.CharField(max_length=50)
-    rok_urodzenia = models.IntegerField
-    plec_regex = RegexValidator(regex=r'k|m', message="Jeśli jesteś kobitą wpis k, jeżeli mężczyzną wpisz m.")
-    plec = models.CharField(validators=[plec_regex], max_length=1)
-    tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                               message="Proszę podać numer telefonu w formacie: +999999999.")
-    numer_telefonu = models.CharField(validators=[tel_regex], max_length=17, blank=True)
-    email = models.EmailField
-    data_utworzenia_konta = models.DateTimeField(auto_now=False)
-    wizyta = models.ForeignKey(Wizyta, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Imię i nazwisko pacjęta: {self.imie}+' '+{self.nazwisko}"
+# class Komentarz(models.Model):
+#     name = models.CharField(max_length=50)
+#     surname = models.CharField(max_length=50)
+#     email = models.EmailField
+#     message = models.TextField("Wiadomość", max_length=500)
+#     # patient = models.ForeignKey(Pacjent, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return f'Pacjent: {self.name} {self.surname} e-mail: {self.email}. Pytanie: {self.message}'

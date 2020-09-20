@@ -15,7 +15,7 @@ class Calendar(HTMLCalendar):
         wizyty_na_dzien = wizyty.filter(day__day=day)
         d = ''
         for wizyta in wizyty_na_dzien:
-            d += f'<p><a href="medical/update/"> {wizyta.start_time}</a></p>'
+            d += f'<p><a href="update"> {wizyta.start_time}</a></p>'
 
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"

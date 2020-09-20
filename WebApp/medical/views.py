@@ -69,20 +69,21 @@ def ask_question(request):
             subject = f"Pacjent {cd['name']} {cd['surname']} pragnie zadać pytanie"
             message = f"Dane pacjenta:\nImię: {cd['name']} Nazwisko: {cd['surname']}\nAdres e-mail: {cd['email']}\n\n" \
                       f"Pytanie:\n{cd['message']}"
-            send_mail(subject, message, cd['email'], 'admin_lekarz@strona.pl')
+            send_mail(subject, message, cd['email'], ['admin_lekarz@strona.pl'])
 
             # dodać poprawny ades e-mail
 
             sent = True
-
+            return redirect('./')
     else:
         form = AskingQuestion()
-
     return render(request, 'medical/question.html', {'form': form, 'sent': sent})
 
-
+# DODA REDIRECT
 
 # @require_http_methods(["GET", "POST"])
+
+
 def update(request, wizyta_id):
 
     w = Wizyta.objects.get(pk=wizyta_id)
