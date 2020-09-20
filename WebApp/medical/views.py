@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render
+from django.shortcuts import reverse
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 
@@ -25,7 +26,7 @@ def register(request):
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect(reverse('medical'))
+        return redirect(reverse('medical:medical'))
     else:
         form = forms.RegisterForm()
     return render(request, 'medical/register.html', {"form": form})
@@ -37,6 +38,19 @@ def login_google(request):
         'google_auth/login.html',
     )
 
+def user_details(request):
+    if request.method == "POST":
+        form = forms.UserDetails(request.POST)
+        if form.is_valid():
+            newuser = form.save(commit=False)
+            newuser.user = request.user
+            newuser.save()
+        else:
+            print(form.errors)
+        return redirect(reverse('medical:medical'))
+    else:
+        form = forms.UserDetails()
+        return render(request, 'medical/userdetails.html', {"form":form})
 
 
 class CalendarView(generic.ListView):
@@ -65,7 +79,29 @@ def get_date(req_day):
     return datetime.today()
 
 
+# @require_http_methods(["GET", "POST"])
+
+
+def update(request, wizyta_id):
+
+    w = Wizyta.objects.get(pk=wizyta_id)
+
+    if request.method == "GET":
+        return render(request, 'medical/update.html', {
+            "wizyta": w,
+        })
+
+    else:
+        # U (Update) z CRUD
+        w.pacjent = Pacjent.objects.get(user=request.user)
+        w.notes = request.POST.get("notes")
+        w.save()
+
+
+        return redirect("medical:calendar")
+
 # Formularz kontaktowy do lekarza
+
 
 
 def ask_question(request):
@@ -87,23 +123,6 @@ def ask_question(request):
         form = AskingQuestion()
     return render(request, 'medical/question.html', {'form': form, 'sent': sent})
 
-# DODA REDIRECT
-
-# @require_http_methods(["GET", "POST"])
 
 
-def update(request, wizyta_id):
 
-    w = Wizyta.objects.get(pk=wizyta_id)
-
-    if request.method == "GET":
-        return render(request, 'medical/update.html', {
-            "wizyta": w,
-        })
-
-    else:
-        # U (Update) z CRUD
-        w.text = request.POST.get("wizyta")
-        w.save()
-
-        return redirect("medical:calendar")

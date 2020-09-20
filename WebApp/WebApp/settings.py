@@ -42,6 +42,7 @@ AUTHENTICATION_BACKENDS = [
 INSTALLED_APPS = [
     'medical',
     'crispy_forms',
+    'djreservation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # 'djreservation.middleware.ReservationMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -160,9 +162,15 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='/medical/'
 LOGOUT_REDIRECT_URL='/medical/'
 
-# Sending questions by e-mail
+# Sending questions by e-mail/ to umożliwa testowanie wysyłania formularza mailowego
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = './email-messages'
 
 # dodać poprawną konforugarcję serwera mailingowego
+
+# email settings for reservation
+
+DEFAULT_FROM_EMAIL = "malinowska.dorota@vp.pl"
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "1025"
