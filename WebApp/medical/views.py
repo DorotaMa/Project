@@ -31,6 +31,14 @@ def register(request):
     return render(request, 'medical/register.html', {"form": form})
 
 
+def login_google(request):
+    return render(
+        request,
+        'google_auth/login.html',
+    )
+
+
+
 class CalendarView(generic.ListView):
     model = Wizyta
     template_name = 'medical/calendar.html'

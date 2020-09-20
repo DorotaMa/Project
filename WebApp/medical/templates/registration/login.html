@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load socialaccount %}
+{% providers_media_js %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,5 +12,10 @@
         {{ form }}
         <input type="submit" value="Zaloguj">
     </form>
+
+    <p>
+        Lub
+        <a href='{% provider_login_url "google" method="oauth2" %}'>Zaloguj przez Google</a>
+    </p>
 </body>
 </html>
