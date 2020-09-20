@@ -59,22 +59,19 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
 ]
-
 SITE_ID = 3
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
+        'APP': {
+            'client_id': '136663236918-n56v83cu10p7vkp6bfa93ats52irr59d.apps.googleusercontent.com',
+            'secret': 'pSTO9BKLjuTWxry8czwrPgHk',
+            'key': ''
         }
     }
 }
-
 
 
 MIDDLEWARE = [
