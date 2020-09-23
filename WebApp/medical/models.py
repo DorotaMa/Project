@@ -7,17 +7,17 @@ from django.contrib.auth.models import User
 # Create your models here.
 from django.urls import reverse
 
-PLEC_CHOICES = [('K','k'),
-                ('M','m'),]
+PLEC_CHOICES = [('k','K'),
+                ('m','M'),]
+
 
 
 class Pacjent(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     imie = models.CharField(max_length=50, blank=True, default=None)
     nazwisko = models.CharField(max_length=50)
     # email = models.EmailField(max_length=254, blank=True)
-    rok_urodzenia = models.IntegerField(blank=True, null=True)
+    rok_urodzenia = models.CharField(max_length=4)
     plec = models.CharField(max_length=1, choices=PLEC_CHOICES)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                message="Proszę podać numer telefonu w formacie: +999999999.")

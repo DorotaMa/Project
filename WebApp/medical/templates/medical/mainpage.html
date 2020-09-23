@@ -1,7 +1,7 @@
 {% extends "medical/layout.html" %}
     {% block content %}
 
-    <div class="credentials" style="display: flex; background-color:#cecece;">
+    <div class="credentials" style="display: flex; background-color:#cecece; margin-bottom:2%">
         {% if user.is_authenticated %}
             <h2 style="color:white; text-align: center;"> Witaj {{user}}! </h2>
             <a href="mojedane" style="color:white"> Moje Dane</a>

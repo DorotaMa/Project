@@ -35,9 +35,14 @@ def register(request):
 def pacjent_detail_view(request):
     obj = Pacjent.objects.get(user=request.user)
     context = {
+        # 'imie': obj.imie,
+        # 'nazwisko': obj.nazwisko,
+        # 'numer_telefonu': obj.numer_telefonu,
+        # 'plec': obj.plec,
+        # 'rok_urodzenia': obj.rok_urodzenia,
         'object': obj
     }
-    return render(request, "medical/mojedane.html",context)
+    return render(request, "medical/mojedane.html", context)
 
 
 def update_personal_data(request):
@@ -48,6 +53,7 @@ def update_personal_data(request):
         user.nazwisko = request.POST.get("nazwisko")
         user.numer_telefonu = request.POST.get("numer_telefonu")
         user.rok_urodzenia = request.POST.get("rok_urodzenia")
+        user.plec = request.POST.get("plec")
 
         user.save()
         return redirect(reverse('medical:medical'))
