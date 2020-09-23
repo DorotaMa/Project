@@ -1,0 +1,10 @@
+{% extends "medical/layout.html" %}
+    {% block content %}
+
+    <p>Imię i nazwisko: {{object.imie}} {{object.nazwisko}}</p>
+    <p>Adres email: {{user.email}}</p>
+    <p>Numer telefonu: {{object.numer_telefonu}}</p>
+    <p> Płeć: {% if object.plec == "k" %} kobieta {% else %} mężczyzna {% endif %}</p>
+    <p>Rok urodzenia: {{object.rok_urodzenia}}</p>
+    <a href="aktualizuj">Zmień swoje dane</a>
+    {% endblock %}

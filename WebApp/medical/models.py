@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -11,10 +12,12 @@ PLEC_CHOICES = [('K','k'),
 
 
 class Pacjent(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     imie = models.CharField(max_length=50, blank=True, default=None)
     nazwisko = models.CharField(max_length=50)
-    rok_urodzenia = models.DateTimeField(blank=True, null=True)
+    # email = models.EmailField(max_length=254, blank=True)
+    rok_urodzenia = models.IntegerField(blank=True, null=True)
     plec = models.CharField(max_length=1, choices=PLEC_CHOICES)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                message="Proszę podać numer telefonu w formacie: +999999999.")

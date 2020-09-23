@@ -34,3 +34,4 @@ class UserDetails(ModelForm):
     class Meta:
         model = Pacjent
         fields = ['imie', 'nazwisko', 'rok_urodzenia', 'plec', 'numer_telefonu']
+

@@ -12,6 +12,7 @@ from .forms import AskingQuestion
 from .models import *
 from .utils import Calendar
 from . import forms
+from .forms import UserDetails
 
 # Create your views here.
 
@@ -31,20 +32,28 @@ def register(request):
     return render(request, 'medical/register.html', {"form": form})
 
 
+def pacjent_detail_view(request):
+    obj = Pacjent.objects.get(user=request.user)
+    context = {
+        'object': obj
+    }
+    return render(request, "medical/mojedane.html",context)
 
-def user_details(request):
-    if request.method == "POST":
-        form = forms.UserDetails(request.POST)
-        if form.is_valid():
-            newuser = form.save(commit=False)
-            newuser.user = request.user
-            newuser.save()
-        else:
-            print(form.errors)
+
+def update_personal_data(request):
+    form = forms.UserDetails(request.POST)
+    if form.is_valid():
+        user = Pacjent.objects.get(user=request.user)
+        user.imie = request.POST.get("imie")
+        user.nazwisko = request.POST.get("nazwisko")
+        user.numer_telefonu = request.POST.get("numer_telefonu")
+        user.rok_urodzenia = request.POST.get("rok_urodzenia")
+
+        user.save()
         return redirect(reverse('medical:medical'))
-    else:
-        form = forms.UserDetails()
-        return render(request, 'medical/userdetails.html', {"form":form})
+
+    return render(request, "medical/aktualizuj.html",{'form':form})
+
 
 
 class CalendarView(generic.ListView):
