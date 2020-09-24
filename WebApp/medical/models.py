@@ -55,18 +55,18 @@ class Wizyta(models.Model):
         return overlap
 
 
-    def clean(self):
-        if self.end_time <= self.start_time:
-            raise ValidationError('Ending times must after starting times')
-
-        events = Wizyta.objects.filter(day=self.day)
-        if events.exists():
-            for event in events:
-                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-                    raise ValidationError(
-                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
-                            event.start_time) + '-' + str(event.end_time))
-
+    # def clean(self):
+    #     if self.end_time <= self.start_time:
+    #         raise ValidationError('Ending times must after starting times')
+    #
+    #     events = Wizyta.objects.filter(day=self.day)
+    #     if events.exists():
+    #         for event in events:
+    #             if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
+    #                 raise ValidationError(
+    #                     'There is an overlap with another event: ' + str(event.day) + ', ' + str(
+    #                         event.start_time) + '-' + str(event.end_time))
+    #
 
 
 

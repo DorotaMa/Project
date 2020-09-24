@@ -15,6 +15,7 @@ urlpatterns = [
     path('question', views.ask_question, name="question"),
     url(r'^calendar', views.CalendarView.as_view(), name='calendar'),
     path("update/<int:wizyta_id>", views.update, name="update"),
+    path("delete/<int:wizyta_id>", views.delete, name="delete"),
     path('', views.login_google, name='google_auth'),
 
 

@@ -12,6 +12,7 @@ from .forms import AskingQuestion
 from .models import *
 from .utils import Calendar
 from . import forms
+import datetime
 from .forms import UserDetails
 
 # Create your views here.
@@ -34,13 +35,17 @@ def register(request):
 
 def pacjent_detail_view(request):
     obj = Pacjent.objects.get(user=request.user)
+    wizyty = Wizyta.objects.filter(pacjent_id=obj.id)
+    # dzisiaj = datetime.datetime.now()
     context = {
         # 'imie': obj.imie,
         # 'nazwisko': obj.nazwisko,
         # 'numer_telefonu': obj.numer_telefonu,
         # 'plec': obj.plec,
         # 'rok_urodzenia': obj.rok_urodzenia,
-        'object': obj
+        'object': obj,
+        'wizyty': wizyty,
+        # 'dzisiaj': dzisiaj,
     }
     return render(request, "medical/mojedane.html", context)
 
@@ -59,7 +64,6 @@ def update_personal_data(request):
         return redirect(reverse('medical:medical'))
 
     return render(request, "medical/aktualizuj.html",{'form':form})
-
 
 
 class CalendarView(generic.ListView):
@@ -85,7 +89,7 @@ def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return datetime.date(year, month, day=1)
-    return datetime.today()
+    return datetime.datetime.today()
 
 
 # @require_http_methods(["GET", "POST"])
@@ -105,6 +109,14 @@ def update(request, wizyta_id):
         w.save()
 
         return redirect("medical:calendar")
+
+
+@require_http_methods(["POST"])
+def delete(request, wizyta_id):
+    wizyta = Wizyta.objects.get(pk=wizyta_id)
+    wizyta.pacjent = None
+    wizyta.save()
+    return redirect("medical:mojedane")
 
 
 # Formularz kontaktowy do lekarza
