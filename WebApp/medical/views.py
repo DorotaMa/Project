@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.views import generic
 from django.utils.safestring import mark_safe
 from django.shortcuts import redirect
-from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 
 from django.core.mail import send_mail
@@ -14,6 +13,7 @@ from .utils import Calendar
 from . import forms
 import datetime
 from .forms import UserDetails
+
 
 # Create your views here.
 
@@ -38,11 +38,6 @@ def pacjent_detail_view(request):
     wizyty = Wizyta.objects.filter(pacjent_id=obj.id)
     # dzisiaj = datetime.datetime.now()
     context = {
-        # 'imie': obj.imie,
-        # 'nazwisko': obj.nazwisko,
-        # 'numer_telefonu': obj.numer_telefonu,
-        # 'plec': obj.plec,
-        # 'rok_urodzenia': obj.rok_urodzenia,
         'object': obj,
         'wizyty': wizyty,
         # 'dzisiaj': dzisiaj,
@@ -63,7 +58,68 @@ def update_personal_data(request):
         user.save()
         return redirect(reverse('medical:medical'))
 
-    return render(request, "medical/aktualizuj.html",{'form':form})
+    return render(request, "medical/aktualizuj.html", {'form': form})
+
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return datetime.date(year, month, day=1)
+    return datetime.datetime.today()
+
+
+# @require_http_methods(["GET", "POST"])
+def booking_appointment(request, wizyta_id):
+    w = Wizyta.objects.get(pk=wizyta_id)
+
+    if request.method == "GET":
+        return render(request, 'medical/update.html', {
+            "wizyta": w,
+        })
+
+    else:
+        # U (Update) z CRUD
+        w.pacjent = Pacjent.objects.get(user=request.user)
+        w.notes = request.POST.get("notes")
+        w.save()
+
+        return redirect("medical:calendar")
+
+
+@require_http_methods(["POST"])
+def cancel_appointment(request, wizyta_id):
+    wizyta = Wizyta.objects.get(pk=wizyta_id)
+    wizyta.pacjent = None
+    wizyta.save()
+    return redirect("medical:mojedane")
+
+
+# Formularz kontaktowy do lekarza
+def ask_question(request):
+    sent = False
+    if request.method == 'POST':
+        form = AskingQuestion(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            subject = f"Pacjent {cd['name']} {cd['surname']} pragnie zadać pytanie"
+            message = f"Dane pacjenta:\nImię: {cd['name']} Nazwisko: {cd['surname']}\nAdres e-mail: {cd['email']}\n\n" \
+                      f"Pytanie:\n{cd['message']}"
+            send_mail(subject, message, cd['email'], ['admin_lekarz@strona.pl'])
+
+            sent = True
+            return redirect('./')
+    else:
+        form = AskingQuestion()
+    return render(request, 'medical/question.html', {'form': form, 'sent': sent})
+
+
+# logowanie google
+
+def login_google(request):
+    return render(
+        request,
+        'google_auth/login.html',
+    )
 
 
 class CalendarView(generic.ListView):
@@ -83,69 +139,3 @@ class CalendarView(generic.ListView):
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
         return context
-
-
-def get_date(req_day):
-    if req_day:
-        year, month = (int(x) for x in req_day.split('-'))
-        return datetime.date(year, month, day=1)
-    return datetime.datetime.today()
-
-
-# @require_http_methods(["GET", "POST"])
-def update(request, wizyta_id):
-
-    w = Wizyta.objects.get(pk=wizyta_id)
-
-    if request.method == "GET":
-        return render(request, 'medical/update.html', {
-            "wizyta": w,
-        })
-
-    else:
-        # U (Update) z CRUD
-        w.pacjent = Pacjent.objects.get(user=request.user)
-        w.notes = request.POST.get("notes")
-        w.save()
-
-        return redirect("medical:calendar")
-
-
-@require_http_methods(["POST"])
-def delete(request, wizyta_id):
-    wizyta = Wizyta.objects.get(pk=wizyta_id)
-    wizyta.pacjent = None
-    wizyta.save()
-    return redirect("medical:mojedane")
-
-
-# Formularz kontaktowy do lekarza
-def ask_question(request):
-    sent = False
-    if request.method == 'POST':
-        form = AskingQuestion(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            subject = f"Pacjent {cd['name']} {cd['surname']} pragnie zadać pytanie"
-            message = f"Dane pacjenta:\nImię: {cd['name']} Nazwisko: {cd['surname']}\nAdres e-mail: {cd['email']}\n\n" \
-                      f"Pytanie:\n{cd['message']}"
-            send_mail(subject, message, cd['email'], ['admin_lekarz@strona.pl'])
-
-            # dodać poprawny ades e-mail
-
-            sent = True
-            return redirect('./')
-    else:
-        form = AskingQuestion()
-    return render(request, 'medical/question.html', {'form': form, 'sent': sent})
-
-
-# logowanie google
-
-def login_google(request):
-    return render(
-        request,
-        'google_auth/login.html',
-    )
-
-

@@ -6,7 +6,6 @@ from .models import Pacjent
 
 
 class RegisterForm(UserCreationForm):
-    #email = forms.EmailField()   # dodajemy swoje pole email
 
     class Meta:
         model = User
@@ -17,10 +16,6 @@ class RegisterForm(UserCreationForm):
             "password1": "Hasło",
             "password2": "Powtórz hasło",
         }
-        # jezeli chcemy dodac aliasy nalezy dodac Labels -> poczytaj jak to zrobic
-        # jezeli nie ma byc napisow dot. password nalezy to usunąc z settings aplikacji passworD_validation
-        # aby to ladniej wygladalo trzeba pobrac crispy
-        # custom user model => dodatkowa tablea
 
 
 class AskingQuestion(forms.Form):

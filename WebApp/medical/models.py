@@ -3,20 +3,19 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-
-# Create your models here.
 from django.urls import reverse
 
-PLEC_CHOICES = [('k','K'),
-                ('m','M'),]
+# Create your models here.
 
+
+PLEC_CHOICES = [('k', 'K'),
+                ('m', 'M'), ]
 
 
 class Pacjent(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
     imie = models.CharField(max_length=50, default=None)
     nazwisko = models.CharField(max_length=50)
-    # email = models.EmailField(max_length=254, blank=True)
     rok_urodzenia = models.CharField(max_length=4)
     plec = models.CharField(max_length=1, choices=PLEC_CHOICES)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
@@ -54,29 +53,14 @@ class Wizyta(models.Model):
 
         return overlap
 
+    def clean(self):
+        if self.end_time <= self.start_time:
+            raise ValidationError('Ending times must after starting times')
 
-    # def clean(self):
-    #     if self.end_time <= self.start_time:
-    #         raise ValidationError('Ending times must after starting times')
-    #
-    #     events = Wizyta.objects.filter(day=self.day)
-    #     if events.exists():
-    #         for event in events:
-    #             if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-    #                 raise ValidationError(
-    #                     'There is an overlap with another event: ' + str(event.day) + ', ' + str(
-    #                         event.start_time) + '-' + str(event.end_time))
-    #
-
-
-
-# class Komentarz(models.Model):
-#     name = models.CharField(max_length=50)
-#     surname = models.CharField(max_length=50)
-#     email = models.EmailField
-#     message = models.TextField("Wiadomość", max_length=500)
-#     # patient = models.ForeignKey(Pacjent, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f'Pacjent: {self.name} {self.surname} e-mail: {self.email}. Pytanie: {self.message}'
-
+        events = Wizyta.objects.filter(day=self.day)
+        if events.exists():
+            for event in events:
+                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
+                    raise ValidationError(
+                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
+                            event.start_time) + '-' + str(event.end_time))

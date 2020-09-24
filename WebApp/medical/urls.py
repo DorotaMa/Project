@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 
 from . import views
-from .views import pacjent_detail_view, update_personal_data
+from .views import pacjent_detail_view, update_personal_data, booking_appointment, cancel_appointment
 
 app_name = 'medical'
 
@@ -14,8 +14,8 @@ urlpatterns = [
     path('aktualizuj', views.update_personal_data, name="aktualizuj"),
     path('question', views.ask_question, name="question"),
     url(r'^calendar', views.CalendarView.as_view(), name='calendar'),
-    path("update/<int:wizyta_id>", views.update, name="update"),
-    path("delete/<int:wizyta_id>", views.delete, name="delete"),
+    path("update/<int:wizyta_id>", views.booking_appointment, name="update"),
+    path("delete/<int:wizyta_id>", views.cancel_appointment, name="delete"),
     path('', views.login_google, name='google_auth'),
 
 
