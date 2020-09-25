@@ -1,0 +1,20 @@
+{% extends "medical/layout.html" %}
+
+{% block title %}Zadaj pytanie lekarzowi {% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+        <h1> Zadaj pytanie reumatolog Marii Malinowskiej</h1>
+        <form action="" method="post">
+
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Wyślij" onclick="return clicked();">
+        </form>
+    <script>
+        function clicked() {
+            alert("Wysłałeś pytanie do reumatolog Marii Malinowskiej");
+            return true;
+        }
+    </script>
+{% endblock %}
