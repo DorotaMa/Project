@@ -33,23 +33,27 @@ class AskingQuestion(forms.Form):
         max_length=15,
         label='Imię:',
         required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Twoje imię'}),
     )
 
     surname = forms.CharField(
         max_length=25,
         label='Nazwisko:',
         required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Twoje nazwisko'}),
     )
 
     email = forms.EmailField(
         label='Adres e-mail:',
         required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Twój adres e-mail'}),
     )
 
     message = forms.CharField(
         required=True,
-        widget=forms.Textarea,
-        label='Wpisz swoje pytanie tutaj:'
+        widget=forms.Textarea(attrs={'placeholder': 'Twoje pytanie'}),
+        label='Wpisz swoje pytanie tutaj:',
+
     )
 
     def __init__(self, *args, **kwargs):
@@ -72,7 +76,7 @@ class AskingQuestion(forms.Form):
 
             ),
             ButtonHolder(
-                Submit('submit', 'Wyślij', css_class='button white')
+                Submit('submit', 'Wyślij', css_class='button white', onclick='alert("Wysłałeś pytanie do reumatolog Marii Malinowskiej!");')
             )
         )
     # name = forms.CharField(max_length=15, label='Imię:')
