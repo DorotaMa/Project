@@ -16,7 +16,7 @@ class Pacjent(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
     imie = models.CharField(max_length=50, default=None)
     nazwisko = models.CharField(max_length=50)
-    rok_urodzenia = models.CharField(max_length=4)
+    rok_urodzenia = models.DateField(help_text='Format: YYYY-MM-DD')
     plec = models.CharField(max_length=1, choices=PLEC_CHOICES)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                message="Proszę podać numer telefonu w formacie: +999999999.")

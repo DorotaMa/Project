@@ -27,10 +27,11 @@ def register(request):
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect(reverse('medical:medical'))
+            return redirect(reverse('medical:medical'))
     else:
         form = forms.RegisterForm()
     return render(request, 'medical/register.html', {"form": form})
+
 
 
 def pacjent_detail_view(request):
