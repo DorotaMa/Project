@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from .models import Pacjent
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+
 
 class RegisterForm(UserCreationForm):
     #email = forms.EmailField()   # dodajemy swoje pole email
@@ -26,10 +29,53 @@ class RegisterForm(UserCreationForm):
 # do podmiany adresy e-mail
 
 class AskingQuestion(forms.Form):
-    name = forms.CharField(max_length=15)
-    surname = forms.CharField(max_length=25)
-    email = forms.EmailField()
-    message = forms.CharField(required=True, widget=forms.Textarea)
+    name = forms.CharField(
+        max_length=15,
+        label='Imię:',
+        required=True,
+    )
+
+    surname = forms.CharField(
+        max_length=25,
+        label='Nazwisko:',
+        required=True,
+    )
+
+    email = forms.EmailField(
+        label='Adres e-mail:',
+        required=True,
+    )
+
+    message = forms.CharField(
+        required=True,
+        widget=forms.Textarea,
+        label='Wpisz swoje pytanie tutaj:'
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-askingQuestion'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'question'
+        self.helper.layout = Layout(
+            Fieldset(
+                'Formularz kontaktowy',
+                'name',
+                'surname',
+                'email',
+                'message',
+
+            ),
+            ButtonHolder(
+                Submit('submit', 'Wyślij', css_class='button white')
+            )
+        )
+    # name = forms.CharField(max_length=15, label='Imię:')
+    # surname = forms.CharField(max_length=25, label='Nazwisko:')
+    # email = forms.EmailField(label='Adres e-mail:')
+    # message = forms.CharField(required=True, widget=forms.Textarea, label='Wpisz swoje pytanie tutaj:')
 
 
 class UserDetails(ModelForm):
