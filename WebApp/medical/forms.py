@@ -59,6 +59,9 @@ class AskingQuestion(forms.Form):
         self.helper.form_class = 'blueForms'
         self.helper.form_method = 'post'
         self.helper.form_action = 'question'
+        self.helper.form_style = 'default'
+
+
         self.helper.layout = Layout(
             Fieldset(
                 'Formularz kontaktowy',

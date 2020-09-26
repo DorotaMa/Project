@@ -1,4 +1,4 @@
-{% extends "medical/layout.html" %}
+{% extends "medical/base.html" %}
 
 {% block title %}Zadaj pytanie lekarzowi {% endblock %}
 
@@ -7,6 +7,8 @@
 
 
         <h1> Zadaj pytanie reumatolog Marii Malinowskiej</h1>
+
+    {% csrf_token %}
        {% crispy form form.helper %}
 
 
