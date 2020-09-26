@@ -13,7 +13,7 @@ PLEC_CHOICES = [('k', 'K'),
 
 
 class Pacjent(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True)
     imie = models.CharField(max_length=50, default=None)
     nazwisko = models.CharField(max_length=50)
     rok_urodzenia = models.DateField(help_text='Format: YYYY-MM-DD')

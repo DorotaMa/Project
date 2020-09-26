@@ -8,12 +8,12 @@
     <p> Numer telefonu: {{object.numer_telefonu}}</p>
     <p> Moje wizyty:
         <ul> {% for wizyta in wizyty %}
-               <li> {{wizyta.id}} <form style=display:inline action="{% url 'medical:delete' wizyta.id %}" method="POST">
+               <li> {{wizyta.day}} {{wizyta.start_time}} <form style=display:inline action="{% url 'medical:delete' wizyta.id %}" method="POST">
             {% csrf_token %}
             <input type="submit" value="Zrezygnuj">
         </form>
                </li> {% endfor%} </ul></p>
 
 
-    <a href="aktualizuj">Zmień swoje dane</a> <a href="/medical">Strona Główna</a>
+    <a href="zmiendane">Zmień swoje dane</a> <a href="/medical">Strona Główna</a>
     {% endblock %}

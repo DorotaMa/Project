@@ -4,6 +4,7 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from django.shortcuts import redirect
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import get_object_or_404
 
 from django.core.mail import send_mail
 
@@ -26,12 +27,13 @@ def register(request):
     if request.method == "POST":
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(reverse('medical:medical'))
+            user = form.save()
+            created_user = User.objects.get(id=user.id)
+            id_user=created_user.id
+            return redirect('medical:aktualizuj', id_user)
     else:
         form = forms.RegisterForm()
     return render(request, 'medical/register.html', {"form": form})
-
 
 
 def pacjent_detail_view(request):
@@ -46,7 +48,19 @@ def pacjent_detail_view(request):
     return render(request, "medical/mojedane.html", context)
 
 
-def update_personal_data(request):
+def update_pacient_data(request, id_user):
+    user = User.objects.get(id=id_user)
+    print(user)
+    form = UserDetails(request.POST or None)
+    if form.is_valid():
+        newuser = form.save(commit=False)
+        newuser.user = user
+        newuser.save()
+        return redirect('medical:medical')
+    return render(request, "medical/aktualizuj.html", {'form': form})
+
+
+def change_patient_data(request):
     form = forms.UserDetails(request.POST)
     if form.is_valid():
         user = Pacjent.objects.get(user=request.user)
@@ -59,7 +73,7 @@ def update_personal_data(request):
         user.save()
         return redirect(reverse('medical:medical'))
 
-    return render(request, "medical/aktualizuj.html", {'form': form})
+    return render(request, "medical/zmiendane.html", {'form': form})
 
 
 def get_date(req_day):
