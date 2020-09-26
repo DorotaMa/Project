@@ -117,6 +117,8 @@ def ask_question(request):
 
             # dodać poprawny ades e-mail
 
+
+
             sent = True
             return redirect('./')
     else:
