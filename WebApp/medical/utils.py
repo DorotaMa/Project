@@ -16,7 +16,7 @@ class Calendar(HTMLCalendar):
         d = ''
         for wizyta in wizyty_na_dzien:
             if wizyta.pacjent is None:
-                d += f'<p><a href="update/{wizyta.id}"> {wizyta.start_time} </a></p>'
+                d += f'<p class="appointment"><a href="update/{wizyta.id}"> {wizyta.start_time} </a></p>'
             else:
                 d += f'<p>{wizyta.start_time} zajęta</p>'
 

@@ -145,13 +145,21 @@ pre { font-family: Open Sans; font-size: 13px; font-style: normal; font-variant:
 }
 
 .calendar {
-  width: 98%;
-  margin: auto;
-  font-size: 13px;
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: #fff;
+    max-width: 1200px;
+    width: 98%;
+    font-size: 13px;
+    color:#757575;
 }
 
 .calendar tr, .calendar td {
-  border: 1px solid black;
+  border: 1px solid #757575;
+
 }
 
 .calendar th {
@@ -182,3 +190,6 @@ ul {
 a {
   color: #17a2b8;
 }
+
+
+
