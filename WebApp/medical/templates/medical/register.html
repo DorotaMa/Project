@@ -1,0 +1,16 @@
+{% extends "medical/layout.html" %}
+    {% block content %}
+    {% load crispy_forms_tags %}
+        Rejestracja
+        <form method="post" action="" >
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Zarejestruj" onclick="return clicked();">
+        </form>
+    <script>
+        function clicked() {
+            alert("Rejestracja przebiegła pomyślnie. Możesz się teraz zalogować używając nazwy użytkownika i hasła, które wpisałeś/aś podczas rejestracji");
+            return true;
+        }
+    </script>
+    {% endblock %}

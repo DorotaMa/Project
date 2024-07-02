@@ -1,0 +1,58 @@
+{% extends "medical/layout.html" %}
+    {% block content %}
+
+    <div class="credentials" style="display: flex; width: 100%; background-color:#cecece; margin-bottom:2%">
+        {% if user.is_authenticated %}
+            <h2 style="color:white; text-align: center; width: 30% "> Witaj {{user}}! </h2>
+            <link1 style=" align-items:center; padding:2%; width:24%; color:white;"> <a href="mojedane"> Moje Dane</a></link1>
+            <link2 style="color:white; align-items:center; padding:2%; width:24%;"> <a href="/logout">Wyloguj</a> </link2>
+            <link3 style="color:white; align-items:center; padding:2%; width:24%;">  <a href="/medical/calendar">Umów Wizytę</a></link3>
+            <link4 style="color:white; align-items:center; padding:2%; width:24%;"> <a href="/medical/question">Zadaj pytanie lekarzowi</a> </link4>
+        {% else %}
+            <a href="/login" style="color:white">Zaloguj</a>
+            <a href="register"> Zarejestruj</a>
+            <a href="/medical/question" style="color:white">Zadaj pytanie lekarzowi</a>
+        {% endif %}
+    </div>
+
+
+<div class="container1">
+    <div class="box1"> <img src="../../static/medical/1800x1200.jpg"/> </div>
+    <div class="box2">
+       <h2> <p> Umów się na wizytę: </p>
+        <span class="phone">
+            <p> <img src=""/> 504 243 133 </p>
+            <p> 89 764 35 81 </p></span>
+        <p> Gabinet: </p>
+        <p> <!-- <img src="../../static/medical/pin.png" style="height:3vw; width:2vw;vertical-align: middle; position: relative; top:5px ; left:5px">--> ul. Nowowiejskiego 23 w Bartoszycach </p></h2>
+    </div>
+</div>
+
+<div class="container2">
+    <div class="box3">
+        <span class="desc"> Reumatolog z ponad <span style="color: #FF5E13"> 30 letnim doświadczeniem</span>. </p>
+            <p> Oferuje kompleksowe leczenie chorób reumatycznych i internistycznych, w tym m.in.:</p> </span>
+            <span class="treatments">
+                <ul> blokady przystawowe </ul>
+                <ul> blokady przygręgosłupowe  </ul>
+                <ul> krioterapia </ul>
+                <ul> laseroterapia </ul>
+                <ul> akupunktura </ul>  </span></div>
+    <div class="box4"> <img src="../../static/medical/pani.jpg"/> </div>
+</div>
+
+
+<div class="gallery">
+    <p class="title" style="padding-left: 10%;  padding-bottom: 2%; padding-top: 2%">Wybrane certyfikaty i dyplomy w specjalizacji </class></p>
+    <div class="boxGallery">
+        <img class="thumbnail" src="../../static/medical/c1.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c2.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c3.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c4.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c5.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c6.jpg" alt=" "/>
+        <img class="thumbnail" src="../../static/medical/c7.jpg" alt=" "/></div>
+</div>
+
+    {% endblock %}
+

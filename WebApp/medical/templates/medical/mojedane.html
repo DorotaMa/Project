@@ -1,0 +1,19 @@
+{% extends "medical/layout.html" %}
+    {% block content %}
+
+    <p> Imię i nazwisko: {{object.imie}} {{object.nazwisko}}</p>
+    <p> Adres email: {{user.email}}</p>
+    <p> Rok urodzenia: {{object.rok_urodzenia}}</p>
+    <p> Płeć: {% if object.plec == "m" %} mezczyzna {% else %} kobieta {% endif %}</p>
+    <p> Numer telefonu: {{object.numer_telefonu}}</p>
+    <p> Moje wizyty:
+        <ul> {% for wizyta in wizyty %}
+               <li> {{wizyta.id}} <form style=display:inline action="{% url 'medical:delete' wizyta.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Zrezygnuj">
+        </form>
+               </li> {% endfor%} </ul></p>
+
+
+    <a href="aktualizuj">Zmień swoje dane</a> <a href="/medical">Strona Główna</a>
+    {% endblock %}
